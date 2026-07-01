@@ -13,9 +13,11 @@ An end-to-end data analytics portfolio project that converts synthetic e-commerc
 
 ## Live Dashboard
 
-**[https://Josh404DR.github.io/ecommerce-market-intelligence-dashboard/](https://Josh404DR.github.io/ecommerce-market-intelligence-dashboard/)**
+**[Open Interactive BI Dashboard](https://josh404dr.github.io/ecommerce-market-intelligence-dashboard/dashboard/index.html)** (dependency-free portfolio dashboard, supporting GMV, completed orders, and AOV trend switching, category growth, product anomaly tracking, and campaign lift views).
 
-*(Reserved link — enable GitHub Pages under Settings → Pages → Deploy from branch → select the branch and `/dashboard` folder to activate it.)*
+The proposed BI layout, definitions, and interactive specifications are documented in:
+- [`dashboard/dashboard_spec.md`](dashboard/dashboard_spec.md)
+- [`dashboard/dashboard_mockup.md`](dashboard/dashboard_mockup.md)
 
 ![Dashboard preview](assets/dashboard_preview.png)
 ![Summary report preview](assets/summary_report_preview.png)
@@ -130,14 +132,7 @@ python src/analyze_data.py
 
 ![Monthly GMV trend](outputs/charts/monthly_gmv_trend.svg)
 
-Open [`dashboard/index.html`](dashboard/index.html) for the interactive,
-dependency-free portfolio dashboard. It supports GMV, order, and AOV trend
-switching and includes category, product, campaign, and anomaly views.
-
-The proposed BI layout, definitions, and interactions are documented in:
-
-- [`dashboard/dashboard_spec.md`](dashboard/dashboard_spec.md)
-- [`dashboard/dashboard_mockup.md`](dashboard/dashboard_mockup.md)
+Open the local [`dashboard/index.html`](dashboard/index.html) file in a browser to run the interactive dashboard locally.
 
 ## Repository Structure
 
