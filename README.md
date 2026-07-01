@@ -4,6 +4,24 @@ An end-to-end data analytics portfolio project that converts synthetic e-commerc
 
 > **Data disclaimer:** Every record is generated mock data. No real company, customer, or platform data is used.
 
+## What This Project Demonstrates
+
+- **E-commerce sales performance analysis** — GMV, completed orders, AOV, top-10 product ranking, and H2-vs-H1 category growth from raw relational data.
+- **Campaign effectiveness analysis** — equal-length pre-period comparison and incremental ROAS to judge which campaigns actually created demand lift.
+- **Product-level sales anomaly monitoring** — a z-score rule flags unusual product-day GMV so analysts can triage pricing, stock, or data issues.
+- **Dashboard-ready datasets, business reports, and a BI dashboard specification** — clean CSV outputs, a stakeholder-facing Markdown report, and a documented dashboard spec/mockup an analyst could hand to a BI developer.
+
+## Live Dashboard
+
+**[https://Josh404DR.github.io/ecommerce-market-intelligence-dashboard/](https://Josh404DR.github.io/ecommerce-market-intelligence-dashboard/)**
+
+*(Reserved link — enable GitHub Pages under Settings → Pages → Deploy from branch → select the branch and `/dashboard` folder to activate it.)*
+
+![Dashboard preview](assets/dashboard_preview.png)
+![Summary report preview](assets/summary_report_preview.png)
+
+> **TODO (manual step):** The two screenshots above are referenced but not yet captured. Open `dashboard/index.html` in a browser, take a screenshot, and save it as `assets/dashboard_preview.png`; do the same for `outputs/summary_report.md` (rendered view) and save as `assets/summary_report_preview.png`. See `assets/README.md` for exact instructions.
+
 ## Project Overview
 
 This one-day MVP demonstrates how an analyst can move from raw relational data to decision-ready outputs using Python, Pandas, SQL, CSV, and a BI dashboard specification. The project emphasizes transparent metric definitions and recommendations that business stakeholders can act on.
@@ -38,14 +56,15 @@ Six synthetic relational tables are generated with a fixed random seed:
 3. Which categories grew fastest in H2 versus H1?
 4. How did daily GMV change before and during each campaign?
 5. Which product-day observations are statistically unusual?
-6. What inventory, campaign, and monitoring actions follow from the evidence?
+6. How does performance differ by customer region and acquisition channel, and which segments deserve a marketing test?
+7. What inventory, campaign, and monitoring actions follow from the evidence?
 
 ## Methodology
 
 1. Generate reproducible synthetic transactions and dimensions.
 2. Validate schemas, dates, duplicates, quantities, and prices.
 3. Restrict commercial KPIs to completed orders.
-4. Build monthly, product, category, and campaign datasets.
+4. Build monthly, product, category, campaign, and customer-segment datasets.
 5. Flag product-day GMV anomalies using an absolute z-score threshold of 3.
 6. Translate results into observation → possible cause → recommended action.
 
@@ -59,8 +78,9 @@ Running the pipeline generates current figures in:
 - [`outputs/kpi_summary.csv`](outputs/kpi_summary.csv)
 - [`outputs/monthly_performance.csv`](outputs/monthly_performance.csv)
 - [`outputs/campaign_effectiveness.csv`](outputs/campaign_effectiveness.csv)
+- [`outputs/customer_segment_performance.csv`](outputs/customer_segment_performance.csv)
 
-The generated scenario typically shows a strong holiday-season peak, product revenue concentration, uneven campaign efficiency, and a manageable product anomaly watchlist.
+The generated scenario typically shows a strong holiday-season peak, product revenue concentration, uneven campaign efficiency, a manageable product anomaly watchlist, and a small set of high-AOV, lower-volume region/channel segments worth testing further.
 
 ## Business Recommendations
 
@@ -68,6 +88,7 @@ The generated scenario typically shows a strong holiday-season peak, product rev
 - Allocate campaign budget using incremental value and margin—not gross ROAS alone.
 - Test growth investment in fast-growing categories while monitoring stock turnover.
 - Route anomaly flags to analysts for campaign, pricing, stock, and data-quality checks.
+- Prioritize marketing tests on region/channel segments with above-average AOV but below-median order volume.
 - Add traffic, conversion, inventory, and contribution-margin data before production use.
 
 ## Tech Stack
@@ -127,12 +148,17 @@ sql/               reusable KPI queries
 src/               data generation, cleaning, and analysis
 outputs/           reports, KPI tables, and chart
 dashboard/         dashboard specification and mockup
+assets/            README preview images (see assets/README.md)
 ```
 
 ## Resume Highlight
 
-> Built an end-to-end e-commerce market intelligence project using Python, Pandas, and SQL; generated and cleaned six relational mock datasets, analyzed GMV/AOV/product/category/campaign performance, designed anomaly monitoring, and translated findings into a stakeholder-ready dashboard and commercial recommendations.
+> Built an end-to-end e-commerce market intelligence project using Python, Pandas, and SQL; generated and cleaned six relational mock datasets, analyzed GMV/AOV/product/category/campaign/customer-segment performance, designed anomaly monitoring, and translated findings into a stakeholder-ready dashboard and commercial recommendations.
 
 ## Notes for Reviewers
 
 This repository is intentionally scoped as a readable one-day MVP. It favors reproducibility, business interpretation, and clear analytical limitations over unnecessary infrastructure.
+
+## 作品集摘要（中文）
+
+本專案模擬電商市場情報分析流程，使用 Python、Pandas、SQL 與 Dashboard 分析 GMV、訂單數、AOV、商品排名、品類成長、行銷活動成效與銷售異常。作品展示我能將電商交易資料轉換為 dashboard-ready datasets、商業分析報告與可執行建議，支援商品經營、活動預算分配與異常追蹤。

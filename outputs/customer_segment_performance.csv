@@ -1,0 +1,21 @@
+region,acquisition_channel,gmv,completed_orders,aov,worth_marketing_test
+North,Organic,147683.63,669,220.75,False
+North,Social,125033.15,592,211.2,False
+North,Paid Search,122039.57,558,218.71,False
+South,Organic,113870.71,531,214.45,False
+South,Paid Search,110167.91,532,207.08,False
+Central,Organic,107551.47,535,201.03,False
+Central,Social,106375.85,472,225.37,False
+Central,Paid Search,105959.34,466,227.38,False
+North,Email,86227.81,377,228.72,False
+South,Social,83924.03,429,195.63,False
+Central,Email,73182.59,343,213.36,True
+South,Email,57894.49,274,211.29,False
+North,Referral,45679.14,218,209.54,False
+Central,Referral,44537.98,241,184.8,False
+East,Organic,44469.86,216,205.88,False
+South,Referral,37893.7,160,236.84,True
+East,Social,34733.04,166,209.24,False
+East,Paid Search,31570.33,149,211.88,False
+East,Email,13211.79,65,203.26,False
+East,Referral,11175.67,68,164.35,False

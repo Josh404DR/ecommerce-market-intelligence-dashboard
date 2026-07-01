@@ -36,6 +36,12 @@ The mock marketplace generated **$1,503,182 in GMV** from **7,061 completed orde
 - **Possible Cause:** Campaign spikes, low-volume product volatility, data issues, or genuine shifts in demand may produce extreme observations.
 - **Recommended Action:** Send anomaly alerts to an analyst queue and require checks for campaign overlap, stock status, price changes, and data completeness before acting.
 
+## Insight 6 — Customer / Region Segment
+
+- **Observation:** **North** led all regions with $526,663 GMV, while **North** recorded the most completed orders (2,414). Across acquisition channels, **Email** customers had the highest AOV at $218.
+- **Possible Cause:** Regional demand concentration and channel-specific customer quality (for example, referral or organic customers tend to arrive with higher purchase intent than paid-channel customers) likely drive the AOV gap between segments.
+- **Recommended Action:** Prioritize marketing tests on segments that combine above-average AOV with below-median order volume — in this run: **Central / Email, South / Referral**. These segments show spending power but limited reach, making them efficient candidates for incremental budget versus scaling already-saturated segments.
+
 ## Decision Notes
 
 - Prioritize peak-season inventory planning around high-GMV products and fast-growing categories.

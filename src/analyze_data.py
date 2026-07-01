@@ -133,6 +133,31 @@ def main() -> None:
 
     campaign_results = campaign_lift(orders, campaigns)
 
+    region_channel = (
+        sales.groupby(["region", "acquisition_channel"], as_index=False)
+        .agg(gmv=("line_revenue", "sum"), completed_orders=("order_id", "nunique"))
+    )
+    region_channel["aov"] = region_channel["gmv"] / region_channel["completed_orders"]
+    overall_segment_aov = region_channel["gmv"].sum() / region_channel["completed_orders"].sum()
+    median_segment_orders = region_channel["completed_orders"].median()
+    region_channel["worth_marketing_test"] = (
+        (region_channel["aov"] > overall_segment_aov)
+        & (region_channel["completed_orders"] <= median_segment_orders)
+    )
+    region_channel = region_channel.sort_values("gmv", ascending=False).round(2)
+
+    region_summary = (
+        sales.groupby("region", as_index=False)
+        .agg(gmv=("line_revenue", "sum"), completed_orders=("order_id", "nunique"))
+    )
+    region_summary["aov"] = region_summary["gmv"] / region_summary["completed_orders"]
+
+    channel_summary = (
+        sales.groupby("acquisition_channel", as_index=False)
+        .agg(gmv=("line_revenue", "sum"), completed_orders=("order_id", "nunique"))
+    )
+    channel_summary["aov"] = channel_summary["gmv"] / channel_summary["completed_orders"]
+
     total_gmv = float(monthly["gmv"].sum())
     total_orders = int(monthly["order_count"].sum())
     overall_aov = total_gmv / total_orders
@@ -140,6 +165,15 @@ def main() -> None:
     top_product = products.iloc[0]
     fastest_category = category_growth.iloc[0]
     best_campaign = campaign_results.loc[campaign_results["gmv_lift_pct"].idxmax()]
+    top_region_gmv = region_summary.loc[region_summary["gmv"].idxmax()]
+    top_region_orders = region_summary.loc[region_summary["completed_orders"].idxmax()]
+    top_channel_aov = channel_summary.loc[channel_summary["aov"].idxmax()]
+    test_candidates = region_channel.loc[region_channel["worth_marketing_test"]].head(3)
+    if test_candidates.empty:
+        test_candidates = region_channel.sort_values("aov", ascending=False).head(2)
+    segment_list_text = ", ".join(
+        f"{row['region']} / {row['acquisition_channel']}" for _, row in test_candidates.iterrows()
+    )
 
     kpis = pd.DataFrame(
         [
@@ -163,6 +197,7 @@ def main() -> None:
     category_growth.to_csv(OUTPUT_DIR / "category_growth.csv", index=False)
     campaign_results.to_csv(OUTPUT_DIR / "campaign_effectiveness.csv", index=False)
     anomalies.to_csv(OUTPUT_DIR / "product_sales_anomalies.csv", index=False)
+    region_channel.to_csv(OUTPUT_DIR / "customer_segment_performance.csv", index=False)
 
     write_gmv_svg(monthly, CHART_DIR / "monthly_gmv_trend.svg")
 
@@ -230,6 +265,12 @@ The mock marketplace generated **{money(total_gmv)} in GMV** from **{total_order
 - **Observation:** The z-score rule flagged **{len(anomalies)} product-day sales anomalies** at |z| ≥ 3.
 - **Possible Cause:** Campaign spikes, low-volume product volatility, data issues, or genuine shifts in demand may produce extreme observations.
 - **Recommended Action:** Send anomaly alerts to an analyst queue and require checks for campaign overlap, stock status, price changes, and data completeness before acting.
+
+## Insight 6 — Customer / Region Segment
+
+- **Observation:** **{top_region_gmv['region']}** led all regions with {money(float(top_region_gmv['gmv']))} GMV, while **{top_region_orders['region']}** recorded the most completed orders ({int(top_region_orders['completed_orders']):,}). Across acquisition channels, **{top_channel_aov['acquisition_channel']}** customers had the highest AOV at {money(float(top_channel_aov['aov']))}.
+- **Possible Cause:** Regional demand concentration and channel-specific customer quality (for example, referral or organic customers tend to arrive with higher purchase intent than paid-channel customers) likely drive the AOV gap between segments.
+- **Recommended Action:** Prioritize marketing tests on segments that combine above-average AOV with below-median order volume — in this run: **{segment_list_text}**. These segments show spending power but limited reach, making them efficient candidates for incremental budget versus scaling already-saturated segments.
 
 ## Decision Notes
 
