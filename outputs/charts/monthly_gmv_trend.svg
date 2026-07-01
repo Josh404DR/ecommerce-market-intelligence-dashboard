@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="80" y="26" font-family="Arial" font-size="20" font-weight="bold" fill="#18181b">Monthly GMV Trend (Synthetic Data)</text>
+<line x1="80" y1="350" x2="930" y2="350" stroke="#d4d4d8"/>
+<line x1="80" y1="45" x2="80" y2="350" stroke="#d4d4d8"/>
+<polyline points="80.0,345.8 157.3,350.0 234.5,264.8 311.8,334.1 389.1,275.7 466.4,219.0 543.6,307.7 620.9,295.8 698.2,225.1 775.5,237.8 852.7,57.4 930.0,45.0" fill="none" stroke="#5B4BCE" stroke-width="4" stroke-linejoin="round"/>
+<circle cx="80.0" cy="345.8" r="5" fill="#5B4BCE"/><circle cx="157.3" cy="350.0" r="5" fill="#5B4BCE"/><circle cx="234.5" cy="264.8" r="5" fill="#5B4BCE"/><circle cx="311.8" cy="334.1" r="5" fill="#5B4BCE"/><circle cx="389.1" cy="275.7" r="5" fill="#5B4BCE"/><circle cx="466.4" cy="219.0" r="5" fill="#5B4BCE"/><circle cx="543.6" cy="307.7" r="5" fill="#5B4BCE"/><circle cx="620.9" cy="295.8" r="5" fill="#5B4BCE"/><circle cx="698.2" cy="225.1" r="5" fill="#5B4BCE"/><circle cx="775.5" cy="237.8" r="5" fill="#5B4BCE"/><circle cx="852.7" cy="57.4" r="5" fill="#5B4BCE"/><circle cx="930.0" cy="45.0" r="5" fill="#5B4BCE"/>
+<text x="80.0" y="385" text-anchor="middle" font-size="12" fill="#52525b">01</text><text x="157.3" y="385" text-anchor="middle" font-size="12" fill="#52525b">02</text><text x="234.5" y="385" text-anchor="middle" font-size="12" fill="#52525b">03</text><text x="311.8" y="385" text-anchor="middle" font-size="12" fill="#52525b">04</text><text x="389.1" y="385" text-anchor="middle" font-size="12" fill="#52525b">05</text><text x="466.4" y="385" text-anchor="middle" font-size="12" fill="#52525b">06</text><text x="543.6" y="385" text-anchor="middle" font-size="12" fill="#52525b">07</text><text x="620.9" y="385" text-anchor="middle" font-size="12" fill="#52525b">08</text><text x="698.2" y="385" text-anchor="middle" font-size="12" fill="#52525b">09</text><text x="775.5" y="385" text-anchor="middle" font-size="12" fill="#52525b">10</text><text x="852.7" y="385" text-anchor="middle" font-size="12" fill="#52525b">11</text><text x="930.0" y="385" text-anchor="middle" font-size="12" fill="#52525b">12</text>
+<text x="18" y="45" font-family="Arial" font-size="12" fill="#52525b">$175,560</text>
+<text x="18" y="350" font-family="Arial" font-size="12" fill="#52525b">$99,437</text>
+<text x="480.0" y="412" text-anchor="middle" font-family="Arial" font-size="11" fill="#71717a">Month (2024)</text>
+</svg>

@@ -1,0 +1,5 @@
+campaign_id,campaign_name,start_date,end_date,channel,budget,discount_rate
+1,Spring Refresh,2024-03-10,2024-03-24,Social,15000,0.12
+2,Mid-Year Sale,2024-06-15,2024-06-30,Paid Search,26000,0.18
+3,Back to Routine,2024-09-01,2024-09-14,Email,12000,0.1
+4,Holiday Mega Sale,2024-11-20,2024-12-05,Multi-channel,42000,0.22

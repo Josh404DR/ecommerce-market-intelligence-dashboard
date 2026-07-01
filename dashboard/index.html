@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>E-commerce Market Intelligence Dashboard</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #667085;
+      --surface: rgba(255,255,255,.92);
+      --line: #e4e7ec;
+      --purple: #6657d9;
+      --purple-soft: #efedff;
+      --green: #039855;
+      --amber: #dc6803;
+      --red: #d92d20;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 8% 0%, #e7e4ff 0, transparent 28%),
+        radial-gradient(circle at 95% 12%, #dff8ee 0, transparent 23%),
+        #f7f8fc;
+    }
+    .wrap { max-width: 1440px; margin: auto; padding: 30px; }
+    header { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 22px; }
+    .eyebrow { color: var(--purple); font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    h1 { margin: 6px 0; font-size: clamp(26px, 4vw, 42px); letter-spacing: -.04em; }
+    .subtitle { color: var(--muted); max-width: 780px; margin: 0; }
+    .synthetic { background: #fff7ed; color: #9a3412; border: 1px solid #fed7aa; padding: 9px 12px; border-radius: 999px; font-size: 12px; white-space: nowrap; }
+    .kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 14px; }
+    .card { background: var(--surface); border: 1px solid rgba(228,231,236,.9); border-radius: 18px; box-shadow: 0 10px 30px rgba(16,24,40,.06); }
+    .kpi { padding: 18px; }
+    .kpi span { color: var(--muted); font-size: 12px; }
+    .kpi strong { display: block; margin-top: 8px; font-size: 25px; letter-spacing: -.03em; }
+    .grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .panel { padding: 20px; min-width: 0; }
+    .panel-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 18px; }
+    h2 { margin: 0; font-size: 16px; }
+    .tabs { display: flex; background: #f2f4f7; padding: 3px; border-radius: 9px; }
+    .tabs button { border: 0; background: transparent; color: var(--muted); padding: 6px 9px; border-radius: 7px; cursor: pointer; font-weight: 700; font-size: 11px; }
+    .tabs button.active { color: var(--purple); background: white; box-shadow: 0 1px 4px #d0d5dd; }
+    svg { width: 100%; height: 300px; overflow: visible; }
+    .axis { stroke: #d0d5dd; stroke-width: 1; }
+    .chart-label { fill: #667085; font-size: 11px; }
+    .line { fill: none; stroke: var(--purple); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+    .point { fill: white; stroke: var(--purple); stroke-width: 3; }
+    .bars { display: grid; gap: 11px; }
+    .bar-row { display: grid; grid-template-columns: 145px 1fr 72px; align-items: center; gap: 10px; font-size: 12px; }
+    .bar-track { height: 10px; border-radius: 999px; background: #f2f4f7; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, #8b7df1, #5b4bce); }
+    .growth-positive { color: var(--green); font-weight: 700; text-align: right; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th { color: var(--muted); text-align: left; font-weight: 700; border-bottom: 1px solid var(--line); padding: 10px 8px; }
+    td { border-bottom: 1px solid #f2f4f7; padding: 10px 8px; }
+    tbody tr:hover { background: #fafaff; }
+    .rank { width: 25px; height: 25px; display: grid; place-items: center; background: var(--purple-soft); color: var(--purple); border-radius: 7px; font-weight: 800; }
+    .lift { font-weight: 800; color: var(--green); }
+    .warning { color: var(--amber); font-weight: 800; }
+    .footnote { margin-top: 10px; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    footer { color: var(--muted); font-size: 11px; padding: 8px 2px 20px; }
+    @media (max-width: 900px) {
+      .wrap { padding: 18px; }
+      header { align-items: start; flex-direction: column; }
+      .kpis { grid-template-columns: repeat(2, 1fr); }
+      .grid { grid-template-columns: 1fr; }
+      .bar-row { grid-template-columns: 110px 1fr 58px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <div class="eyebrow">Portfolio Case Study</div>
+        <h1>E-commerce Market Intelligence</h1>
+        <p class="subtitle">Sales momentum, category growth, campaign effectiveness and product anomaly monitoring—translated into decision-ready market intelligence.</p>
+      </div>
+      <div class="synthetic">Synthetic data · Reproducible seed 42</div>
+    </header>
+
+    <section class="kpis" id="kpis"></section>
+
+    <section class="grid">
+      <article class="card panel">
+        <div class="panel-head">
+          <div><h2>Monthly Performance</h2><div class="footnote">Click a metric to compare the market trajectory.</div></div>
+          <div class="tabs">
+            <button data-metric="gmv" class="active">GMV</button>
+            <button data-metric="order_count">Orders</button>
+            <button data-metric="aov">AOV</button>
+          </div>
+        </div>
+        <svg id="trend" viewBox="0 0 760 300" role="img" aria-label="Monthly performance chart"></svg>
+      </article>
+      <article class="card panel">
+        <div class="panel-head"><h2>Category Growth · H2 vs H1</h2></div>
+        <div class="bars" id="category-bars"></div>
+        <p class="footnote">Growth reflects the synthetic scenario. Validate margin and inventory before investment.</p>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card panel">
+        <div class="panel-head"><h2>Top 10 Products by GMV</h2></div>
+        <table>
+          <thead><tr><th>#</th><th>Product</th><th>Units</th><th>GMV</th></tr></thead>
+          <tbody id="products"></tbody>
+        </table>
+      </article>
+      <article class="card panel">
+        <div class="panel-head"><h2>Campaign Effectiveness</h2></div>
+        <table>
+          <thead><tr><th>Campaign</th><th>GMV Lift</th><th>Incremental ROAS</th></tr></thead>
+          <tbody id="campaigns"></tbody>
+        </table>
+        <p class="footnote">Before-versus-during comparison is directional and does not establish causality.</p>
+      </article>
+    </section>
+
+    <section class="card panel">
+      <div class="panel-head"><h2>Product Sales Anomaly Watchlist</h2><span class="warning">|z-score| ≥ 3</span></div>
+      <table>
+        <thead><tr><th>Date</th><th>Product</th><th>Daily GMV</th><th>Z-score</th><th>Analyst action</th></tr></thead>
+        <tbody id="anomalies"></tbody>
+      </table>
+      <p class="footnote">Recommended review: campaign overlap → stock status → price changes → data quality. Anomaly flags are triage signals, not autonomous decisions.</p>
+    </section>
+    <footer>Built with Python, Pandas, SQL, CSV and dependency-free HTML/SVG · All data is fictional.</footer>
+  </div>
+
+  <script src="dashboard_data.js"></script>
+  <script>
+    const data = window.DASHBOARD_DATA;
+    const money = value => new Intl.NumberFormat("en-US", {style:"currency", currency:"USD", maximumFractionDigits:0}).format(value);
+    const number = value => new Intl.NumberFormat("en-US").format(value);
+    const pct = value => `${(value * 100).toFixed(1)}%`;
+
+    const kpiData = [
+      ["Total GMV", money(data.kpis.total_gmv)],
+      ["Completed Orders", number(data.kpis.completed_orders)],
+      ["Average Order Value", money(data.kpis.aov)],
+      ["Peak Month", data.kpis.best_month],
+      ["Anomaly Flags", number(data.kpis.anomaly_count)]
+    ];
+    document.querySelector("#kpis").innerHTML = kpiData.map(([label, value]) =>
+      `<article class="card kpi"><span>${label}</span><strong>${value}</strong></article>`
+    ).join("");
+
+    function drawTrend(metric) {
+      const svg = document.querySelector("#trend");
+      const values = data.monthly.map(row => Number(row[metric]));
+      const min = Math.min(...values), max = Math.max(...values), span = max - min || 1;
+      const left = 64, right = 22, top = 20, bottom = 48, width = 760, height = 300;
+      const x = i => left + i * (width - left - right) / (values.length - 1);
+      const y = v => top + (max - v) / span * (height - top - bottom);
+      const formatter = metric === "order_count" ? number : money;
+      const points = values.map((v, i) => `${x(i)},${y(v)}`).join(" ");
+      svg.innerHTML = `
+        <line class="axis" x1="${left}" y1="${height-bottom}" x2="${width-right}" y2="${height-bottom}"/>
+        <line class="axis" x1="${left}" y1="${top}" x2="${left}" y2="${height-bottom}"/>
+        <text class="chart-label" x="2" y="${top+5}">${formatter(max)}</text>
+        <text class="chart-label" x="2" y="${height-bottom}">${formatter(min)}</text>
+        <polyline class="line" points="${points}"/>
+        ${values.map((v,i) => `<circle class="point" cx="${x(i)}" cy="${y(v)}" r="5"><title>${data.monthly[i].order_month}: ${formatter(v)}</title></circle>`).join("")}
+        ${data.monthly.map((row,i) => `<text class="chart-label" x="${x(i)}" y="${height-20}" text-anchor="middle">${row.order_month.slice(5)}</text>`).join("")}`;
+    }
+    drawTrend("gmv");
+    document.querySelectorAll(".tabs button").forEach(button => button.addEventListener("click", () => {
+      document.querySelectorAll(".tabs button").forEach(item => item.classList.remove("active"));
+      button.classList.add("active");
+      drawTrend(button.dataset.metric);
+    }));
+
+    const maxGrowth = Math.max(...data.categories.map(row => Math.max(0, row.h2_vs_h1_growth_pct)));
+    document.querySelector("#category-bars").innerHTML = data.categories.map(row => `
+      <div class="bar-row">
+        <span>${row.category_name}</span>
+        <div class="bar-track"><div class="bar-fill" style="width:${Math.max(3, row.h2_vs_h1_growth_pct / maxGrowth * 100)}%"></div></div>
+        <span class="growth-positive">${pct(row.h2_vs_h1_growth_pct)}</span>
+      </div>`).join("");
+
+    document.querySelector("#products").innerHTML = data.top_products.map((row,index) => `
+      <tr><td><span class="rank">${index+1}</span></td><td>${row.product_name}</td><td>${number(row.units_sold)}</td><td>${money(row.gmv)}</td></tr>`
+    ).join("");
+    document.querySelector("#campaigns").innerHTML = data.campaigns.map(row => `
+      <tr><td>${row.campaign_name}</td><td class="lift">${pct(row.gmv_lift_pct)}</td><td>${row.incremental_roas.toFixed(2)}x</td></tr>`
+    ).join("");
+    document.querySelector("#anomalies").innerHTML = data.anomalies.slice(0,12).map(row => `
+      <tr><td>${row.order_date}</td><td>${row.product_name}</td><td>${money(row.daily_gmv)}</td><td class="warning">${row.z_score.toFixed(2)}</td><td>Review context</td></tr>`
+    ).join("");
+  </script>
+</body>
+</html>
